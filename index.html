@@ -1,521 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6P03DGKQQ5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6P03DGKQQ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6P03DGKQQ5');
+  </script>
 
-  gtag('config', 'G-6P03DGKQQ5');
-</script>
-    <meta name="google-site-verification" content="KegbdbkAaRREAjbbB0Ec3N83I3hvHh-Vt_ZEGt0ZdzE" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO Tags -->
-    <title>Oneiro: AI Dream Analyzer & Journal</title>
-    <!-- Add placeholder favicon to prevent 404 error -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
-    
-    <meta name="description" content="Unlock the secrets of your subconscious with Oneiro, an AI-powered dream analyzer and personal dream journal. Get spiritual and scientific interpretations.">
-    <meta name="keywords" content="dream analyzer, dream interpreter, dream journal, dream meaning, ai dream analysis, spiritual dream meaning, scientific dream analysis">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oneiro: AI Dream Analyzer & Journal</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-        }
-        .container {
-            max-width: 700px;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Modal Styles */
-        #historyModal.hidden {
-            display: none;
-        }
-        /* Hide elements by default */
-        .authed-only {
-            display: none;
-        }
-    </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+
+  <meta name="description" content="AI-powered dream analyzer & journal">
+  <meta name="keywords" content="dream analyzer, ai dreams">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f4f8;
+    }
+    .container { max-width: 700px; }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .authed-only { display: none; }
+  </style>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen py-8">
-    <div class="container bg-white w-full mx-4 p-6 sm:p-8 rounded-2xl shadow-lg relative">
-        
-        <!-- Header with Login/History Buttons -->
-        <header class="flex justify-between items-center pb-4 border-b border-gray-200">
-            <h1 class="text-3xl font-bold text-gray-800">Oneiro</h1>
-            <div class="flex items-center space-x-3">
-                
-                <!-- Logged-in User Info & Controls -->
-                <button id="historyBtn" class="authed-only text-gray-600 hover:text-blue-600 transition p-2 rounded-full" title="Dream History">
-                    <!-- History Icon (Book) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                </button>
-                <button id="logoutBtn" class="authed-only text-gray-600 hover:text-red-600 transition p-2 rounded-full" title="Logout">
-                    <!-- Logout Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                </button>
-                <!-- User Profile Pic -->
-                <img id="userPic" class="authed-only w-8 h-8 rounded-full" alt="Profile picture">
-                
-                <!-- This button is shown only when logged OUT -->
-                <button id="loginBtn" class="text-sm bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition">
-                    Login with Google
-                </button>
-            </div>
-        </header>
+<div class="container bg-white w-full mx-4 p-6 sm:p-8 rounded-2xl shadow-lg">
 
-        <div class="text-center mt-6">
-            <h2 class="text-xl font-semibold text-gray-700">AI Dream Analyzer & Journal</h2>
-            <p class="text-gray-600 mt-2">Unlock the secrets of your subconscious. Get AI-powered dream analysis.</p>
-        </div>
-        
-        <!-- This div will show a message if login is needed -->
-        <div id="loginMessage" class="hidden mt-6 p-4 bg-yellow-50 border border-yellow-300 rounded-lg text-center text-yellow-800">
-            Please log in to save and analyze your dreams.
-        </div>
+  <!-- HEADER -->
+  <header class="flex justify-between items-center pb-4 border-b">
+    <h1 class="text-3xl font-bold">Oneiro</h1>
 
-        <div class="mt-8">
-            <label for="dreamInput" class="block text-sm font-medium text-gray-700 mb-2">Describe your dream in detail here:</label>
-            <textarea id="dreamInput" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Example: I had a dream that I was flying... / मैंने सपने में देखा कि मैं उड़ रहा हूँ..."></textarea>
-        </div>
+    <div class="flex items-center gap-3">
+      <button id="historyBtn" class="authed-only text-gray-600">📖</button>
+      <button id="logoutBtn" class="authed-only text-red-600">⎋</button>
+      <img id="userPic" class="authed-only w-8 h-8 rounded-full">
+      <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+        Login with Google
+      </button>
+    </div>
+  </header>
 
-        <div class="mt-6 text-center">
-            <button onclick="getInterpretation()" id="submitBtn" class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-transform transform hover:scale-105">
-                Find Meaning
-            </button>
-        </div>
-        
-        <!-- Disclaimer -->
-        <p class="text-center text-xs text-gray-500 mt-4">Disclaimer: AI-generated interpretations are based on patterns and data. They are not a substitute for professional psychological or medical advice.</p>
+  <!-- HERO -->
+  <div class="text-center mt-6">
+    <h2 class="text-xl font-semibold">AI Dream Analyzer</h2>
+    <p class="text-gray-600 mt-2">Guest allowed • Login to save history</p>
+  </div>
 
-        <div id="result" class="mt-8">
-            <!-- Results will be displayed here -->
-        </div>
+  <!-- INPUT -->
+  <div class="mt-8">
+    <textarea id="dreamInput" rows="5"
+      class="w-full p-3 border rounded-lg"
+      placeholder="Describe your dream..."></textarea>
+  </div>
 
-        <div class="text-center text-xs text-gray-400 mt-8 border-t border-gray-200 pt-4">
-            <p>&copy; 2025 Vedang Soni. All rights reserved.</p>
-        </div>
+  <div class="mt-6 text-center">
+    <button id="submitBtn"
+      onclick="getInterpretation()"
+      class="bg-blue-600 text-white px-8 py-3 rounded-lg">
+      Find Meaning
+    </button>
+  </div>
+
+  <div id="result" class="mt-8"></div>
+
+</div>
+
+<!-- HISTORY MODAL -->
+<div id="historyModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+  <div class="bg-white rounded-xl w-full max-w-lg p-4">
+    <h2 class="text-xl font-bold mb-2">Dream History</h2>
+    <div id="historyList">Login to see history</div>
+    <button onclick="document.getElementById('historyModal').classList.add('hidden')" class="mt-4">Close</button>
+  </div>
+</div>
+
+<!-- FIREBASE SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+<script>
+/* ---------------- FIREBASE CONFIG ---------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyA_eqoKj8Mv6gnS7dGfuZ-X6LmSrCDDhCg",
+  authDomain: "oneiro-b79d9.firebaseapp.com",
+  projectId: "oneiro-b79d9",
+  storageBucket: "oneiro-b79d9.appspot.com",
+  messagingSenderId: "288643438849",
+  appId: "1:288643438849:web:ca388425439c1ff3476300"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+/* ---------------- GLOBAL STATE ---------------- */
+let currentUserId = null;
+let unsubscribeHistory = null;
+
+/* ---------------- AUTH PERSISTENCE ---------------- */
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+/* ---------------- AUTH STATE ---------------- */
+auth.onAuthStateChanged(user => {
+  const authed = document.querySelectorAll('.authed-only');
+
+  if (user) {
+    currentUserId = user.uid;
+    authed.forEach(e => e.style.display = 'inline-block');
+    loginBtn.style.display = 'none';
+    if (user.photoURL) userPic.src = user.photoURL;
+    listenToHistory(user.uid);
+  } else {
+    currentUserId = null;
+    authed.forEach(e => e.style.display = 'none');
+    loginBtn.style.display = 'inline-block';
+    if (unsubscribeHistory) unsubscribeHistory();
+  }
+});
+
+/* ---------------- LOGIN / LOGOUT ---------------- */
+loginBtn.onclick = () => auth.signInWithRedirect(provider);
+logoutBtn.onclick = () => auth.signOut();
+historyBtn.onclick = () =>
+  document.getElementById('historyModal').classList.remove('hidden');
+
+</script>
+<script>
+/* ---------------- HISTORY (FIRESTORE) ---------------- */
+
+function listenToHistory(uid) {
+  unsubscribeHistory = db
+    .collection("users")
+    .doc(uid)
+    .collection("dreams")
+    .orderBy("id", "desc")
+    .onSnapshot(snapshot => {
+      const data = [];
+      snapshot.forEach(doc => data.push(doc.data()));
+      renderHistoryList(data);
+    });
+}
+
+function renderHistoryList(list) {
+  if (!list.length) {
+    historyList.innerHTML = "<p class='text-gray-500'>No dreams saved yet.</p>";
+    return;
+  }
+
+  historyList.innerHTML = list.map(d => `
+    <div class="border p-3 rounded mb-2 cursor-pointer">
+      <h4 class="font-semibold text-blue-600">${d.title}</h4>
+      <p class="text-xs text-gray-500">${d.date}</p>
+    </div>
+  `).join("");
+}
+
+async function saveHistory(entry) {
+  if (!currentUserId) return; // 👈 guest = no save
+  await db
+    .collection("users")
+    .doc(currentUserId)
+    .collection("dreams")
+    .doc(entry.id.toString())
+    .set(entry);
+}
+
+/* ---------------- GEMINI API ---------------- */
+
+async function getInterpretation() {
+  const dream = dreamInput.value.trim();
+  if (!dream) {
+    alert("Please write your dream first 🙂");
+    return;
+  }
+
+  result.innerHTML = `<div class="loader"></div>`;
+
+  const apiKey = "AIzaSyCWUir05ATgwpAVP8tH6tbhVQAYBgO4_dA";
+  const API_URL =
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  const prompt = `
+Analyze the following dream: "${dream}"
+
+Detect the language automatically and reply in the same language.
+
+Use exact headings:
+## TITLE
+## SPIRITUAL ANALYSIS
+## SCIENTIFIC ANALYSIS
+`;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    });
+
+    const json = await res.json();
+    const text = json.candidates[0].content.parts[0].text;
+
+    parseAndShow(text, dream);
+  } catch (e) {
+    result.innerHTML = `<p class="text-red-600">Error: ${e.message}</p>`;
+  }
+}
+
+/* ---------------- PARSE RESULT ---------------- */
+
+function parseAndShow(content, dreamText) {
+  let title = "Dream";
+  let spiritual = "";
+  let scientific = "";
+
+  try {
+    title = content.split("## TITLE")[1]
+      .split("## SPIRITUAL")[0].trim();
+    spiritual = content.split("## SPIRITUAL ANALYSIS")[1]
+      .split("## SCIENTIFIC")[0].trim();
+    scientific = content.split("## SCIENTIFIC ANALYSIS")[1].trim();
+  } catch {
+    scientific = content;
+  }
+
+  const entry = {
+    id: Date.now(),
+    date: new Date().toDateString(),
+    title,
+    dream: dreamText,
+    spiritual,
+    scientific
+  };
+
+  saveHistory(entry);
+  showResult(entry);
+  dreamInput.value = "";
+}
+
+/* ---------------- DISPLAY RESULT ---------------- */
+
+function showResult(entry) {
+  result.innerHTML = `
+    <div class="bg-gray-50 border rounded-lg p-4 mb-4">
+      <h3 class="font-bold mb-2">Spiritual Analysis</h3>
+      <p class="whitespace-pre-wrap">${entry.spiritual}</p>
     </div>
 
-    <!-- History Modal -->
-    <div id="historyModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg max-h-[80vh] flex flex-col">
-            <header class="flex justify-between items-center p-4 border-b">
-                <h2 class="text-xl font-bold text-gray-800">Dream History</h2>
-                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-            </header>
-            <div id="historyList" class="p-6 overflow-y-auto">
-                <!-- History items will be injected here by JS -->
-                <p class="text-gray-500">Loading history...</p>
-            </div>
-        </div>
+    <div class="bg-gray-50 border rounded-lg p-4">
+      <h3 class="font-bold mb-2">Scientific Analysis</h3>
+      <p class="whitespace-pre-wrap">${entry.scientific}</p>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <div class="mt-4 text-sm text-gray-600 italic">
+      "${entry.dream}"
+    </div>
+  `;
+}
+</script>
 
-    <script>
-        // --- ⚠️ 1. YOUR FIREBASE CONFIG GOES HERE ⚠️ ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyA_eqoKj8Mv6gnS7dGfuZ-X6LmSrCDDhCg",
-            authDomain: "oneiro-b79d9.firebaseapp.com",
-            projectId: "oneiro-b79d9",
-            storageBucket: "oneiro-b79d9.firebasestorage.app",
-            messagingSenderId: "288643438849",
-            appId: "1:288643438849:web:ca388425439c1ff3476300"
-        };
-
-        // --- 2. Initialize Firebase ---
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        
-        // --- Global Variables ---
-        let currentUserId = null;
-        let unsubscribeHistory = null; // To stop listening to updates when logged out
-
-        // --- UI Elements ---
-        const dreamInput = document.getElementById('dreamInput');
-        const resultDiv = document.getElementById('result');
-        const submitBtn = document.getElementById('submitBtn');
-        const historyBtn = document.getElementById('historyBtn');
-        const historyModal = document.getElementById('historyModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const historyList = document.getElementById('historyList');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loginMessage = document.getElementById('loginMessage');
-        const authedElements = document.querySelectorAll('.authed-only');
-        const userPic = document.getElementById('userPic'); // Get the profile pic element
-
-        // --- 3. Authentication (Login/Logout) ---
-
-        // **FIX:** Set persistence FIRST to avoid redirect issues.
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-            .then(() => {
-                // All auth logic now runs *after* persistence is set.
-
-                // Handle redirect result on page load
-                auth.getRedirectResult()
-                    .then((result) => {
-                        if (result.user) {
-                            console.log('Login successful via redirect.');
-                        }
-                    }).catch((error) => {
-                        if (error.code !== 'auth/operation-not-supported-in-this-environment') {
-                            console.error("Redirect Login Error:", error);
-                        }
-                    });
-
-                // Listen for Auth Changes (Main Controller)
-                auth.onAuthStateChanged(user => {
-                    if (user) {
-                        // --- User is LOGGED IN (Google) ---
-                        currentUserId = user.uid;
-                        console.log("User signed in:", user.uid, user.displayName);
-                        
-                        // Update user info
-                        if (userPic && user.photoURL) {
-                            userPic.src = user.photoURL;
-                        }
-
-                        updateUIMode(true); 
-                        listenToHistory(currentUserId); 
-                    } else {
-                        // --- User is LOGGED OUT ---
-                        currentUserId = null;
-                        console.log("User signed out.");
-
-                        // Clear user info
-                        if (userPic) {
-                            userPic.src = ""; // Clear pic
-                        }
-
-                        updateUIMode(false); 
-                        if (unsubscribeHistory) {
-                            unsubscribeHistory(); 
-                        }
-                        historyList.innerHTML = '<p class="text-gray-500">Please login to see your history.</p>';
-                    }
-                });
-
-            })
-            .catch((error) => {
-                console.error("Error setting persistence:", error);
-                // Handle error if persistence fails
-            });
-
-
-        // Login
-        loginBtn.addEventListener('click', () => {
-            auth.signInWithRedirect(googleProvider)
-                .catch((error) => {
-                    if (error.code !== 'auth/operation-not-supported-in-this-environment') {
-                        console.error("Login Error:", error);
-                    }
-                });
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut();
-        });
-
-
-        // UI Update Helper
-        function updateUIMode(isLoggedIn) {
-            authedElements.forEach(el => {
-                el.style.display = isLoggedIn ? 'inline-block' : 'none';
-            });
-
-            loginBtn.style.display = isLoggedIn ? 'none' : 'inline-block';
-            
-            // Show/hide main UI elements based on login
-            loginMessage.style.display = isLoggedIn ? 'none' : 'block';
-            submitBtn.disabled = !isLoggedIn;
-            dreamInput.disabled = !isLoggedIn;
-
-            if (!isLoggedIn) {
-                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                dreamInput.classList.add('bg-gray-100');
-            } else {
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                dreamInput.classList.remove('bg-gray-100');
-            }
-        }
-
-        // --- 4. History Modal Logic (No changes needed) ---
-        historyBtn.addEventListener('click', () => {
-            historyModal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            historyModal.classList.add('hidden');
-        });
-
-        historyModal.addEventListener('click', (e) => {
-            if (e.target === historyModal) {
-                historyModal.classList.add('hidden');
-            }
-        });
-
-        // --- 5. Firestore (Database) Logic ---
-        function listenToHistory(uid) {
-            // Order by 'id' (which is timestamp) in descending order to show newest first
-            const dreamsCollection = db.collection('users').doc(uid).collection('dreams').orderBy('id', 'desc');
-
-            unsubscribeHistory = dreamsCollection.onSnapshot(snapshot => {
-                const history = [];
-                snapshot.forEach(doc => {
-                    history.push(doc.data());
-                });
-                renderHistoryList(history); 
-            }, error => {
-                console.error("Error listening to history: ", error);
-                historyList.innerHTML = '<p class="text-red-500">Could not load history.</p>';
-            });
-        }
-
-        async function saveHistory(newEntry) {
-            if (!currentUserId) return; 
-
-            // Use the timestamp 'id' as the document ID
-            const dreamDocRef = db.collection('users').doc(currentUserId).collection('dreams').doc(newEntry.id.toString());
-            try {
-                await dreamDocRef.set(newEntry); 
-            } catch (error) {
-                console.error("Error saving dream: ", error);
-            }
-        }
-
-        function renderHistoryList(history) {
-            if (history.length === 0) {
-                historyList.innerHTML = '<p class="text-gray-500">No dreams saved yet.</p>';
-                return;
-            }
-
-            historyList.innerHTML = history.map(entry => `
-                <div class="flex items-center justify-between p-4 border rounded-lg mb-3">
-                    <div class="flex-grow cursor-pointer" data-id="${entry.id}">
-                        <h3 class="font-semibold text-blue-600">${entry.title}</h3>
-                        <p class="text-sm text-gray-500">${entry.date}</p>
-                    </div>
-                    <button class="ml-4 text-gray-400 hover:text-red-600 transition p-1 rounded-full" data-delete-id="${entry.id}" title="Delete this entry">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
-                </div>
-            `).join('');
-
-            // Click listener to VIEW old dream
-            historyList.querySelectorAll('[data-id]').forEach(item => {
-                item.addEventListener('click', () => {
-                    const id = item.getAttribute('data-id');
-                    const entry = history.find(e => e.id == id); 
-                    if (entry) {
-                        showSavedResult(entry);
-                        historyModal.classList.add('hidden');
-                        window.scrollTo(0, document.body.scrollHeight);
-                    }
-                });
-            });
-
-            // Click listener to DELETE dream
-            historyList.querySelectorAll('[data-delete-id]').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = button.getAttribute('data-delete-id');
-                    deleteHistoryItem(id); 
-                });
-            });
-        }
-
-        async function deleteHistoryItem(id) {
-            if (!currentUserId) return;
-
-            const dreamDocRef = db.collection('users').doc(currentUserId).collection('dreams').doc(id.toString());
-            try {
-                await dreamDocRef.delete(); 
-            } catch (error) {
-                console.error("Error deleting dream: ", error);
-            }
-        }
-        
-        // --- 6. Core API Logic (Mostly Unchanged) ---
-        async function getInterpretation() {
-            const apiKey = "AIzaSyCWUir05ATgwpAVP8tH6tbhVQAYBgO4_dA";
-            const dream = dreamInput.value.trim();
-
-            if (!dream) {
-                alert('Please enter your dream description.');
-                return;
-            }
-            
-            // Check for login (this should be handled by disabling the button, but as a safeguard)
-            if (!currentUserId) {
-                alert("Please login first.");
-                return;
-            }
-
-            resultDiv.innerHTML = '<div class="loader"></div>';
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-            // Using the model confirmed via curl
-            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            const prompt = `
-                Analyze the following dream: "${dream}"
-                Your primary task is to detect the language of the dream (e.g., English, Hindi, Hinglish, Spanish, etc.).
-                You MUST provide the entire response *in that same language*.
-                The response must include three distinct parts, using these exact markers:
-                1.  Start with "## TITLE": A short, catchy title for this dream (max 5-7 words).
-                2.  Start with "## SPIRITUAL ANALYSIS": A spiritual analysis of the dream.
-                3.  Start with "## SCIENTIFIC ANALYSIS": A scientific or psychological analysis of the dream.
-            `;
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || `API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content.parts[0].text) {
-                    const content = data.candidates[0].content.parts[0].text;
-                    parseAndShowResult(content, dream);
-                } else {
-                    throw new Error('Unexpected API response format.');
-                }
-
-            } catch (error) {
-                displayError(error);
-            } finally {
-                submitBtn.disabled = false;
-                // Re-check login status before re-enabling
-                if(currentUserId) {
-                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                }
-            }
-        }
-
-        function parseAndShowResult(content, dreamText) {
-            let title = "Untitled Dream";
-            let spiritual = "Analysis not available.";
-            let scientific = "Analysis not available.";
-
-            try {
-                // Parse Title
-                if (content.includes("## TITLE")) {
-                    title = content.split("## TITLE")[1].split("## SPIRITUAL ANALYSIS")[0].trim();
-                }
-                // Parse Spiritual
-                if (content.includes("## SPIRITUAL ANALYSIS")) {
-                    spiritual = content.split("## SPIRITUAL ANALYSIS")[1].split("## SCIENTIFIC ANALYSIS")[0].trim();
-                }
-                // Parse Scientific
-                if (content.includes("## SCIENTIFIC ANALYSIS")) {
-                    scientific = content.split("## SCIENTIFIC ANALYSIS")[1].trim();
-                } else if (content.includes("## SPIRITUAL ANALYSIS")) {
-                    // Fallback if SCIENTIFIC tag is missing
-                    spiritual = content.split("## SPIRITUAL ANALYSIS")[1].trim();
-                }
-            } catch (e) {
-                console.error("Error parsing AI response:", e);
-                // Fallback: show raw content if parsing fails
-                scientific = content.replace("## TITLE", "").replace(title, "").replace("## SPIRITUAL ANALYSIS", "").replace("## SCIENTIFIC ANALYSIS", "").trim(); 
-            }
-
-            const newEntry = {
-                id: Date.now(), // Use timestamp as a unique ID
-                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                title: title.replace(/\*\*/g, ''), // Clean title
-                dream: dreamText,
-                spiritual: spiritual,
-                scientific: scientific
-            };
-
-            // Save to Firestore
-            saveHistory(newEntry);
-            
-            // Display the new result
-            showSavedResult(newEntry); 
-            dreamInput.value = ""; // Clear input box
-        }
-
-        // Renders a dream entry (new or old) into the main resultDiv
-        function showSavedResult(entry) {
-            // Function to format text (bold, italics)
-            const formatText = (text) => {
-                return text
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italics
-            };
-            
-            resultDiv.innerHTML = `
-                <div class="p-4 sm:p-5 rounded-xl border bg-gray-50 mb-5">
-                    <h2 class="text-xl font-bold text-gray-800 mb-3">Spiritual Analysis</h2>
-                    <p class="text-gray-700 whitespace-pre-wrap">${formatText(entry.spiritual)}</p>
-                </div>
-                <div class="p-4 sm:p-5 rounded-xl border bg-gray-50">
-                    <h2 class="text-xl font-bold text-gray-800 mb-3">Scientific/Psychological Analysis</h2>
-                    <p class="text-gray-700 whitespace-pre-wrap">${formatText(entry.scientific)}</p>
-                </div>
-                <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h4 class="font-semibold text-blue-800">Your Original Dream (from ${entry.date}):</h4>
-                    <p class="text-gray-700 italic mt-2 whitespace-pre-wrap">"${entry.dream}"</p>
-                </div>
-            `;
-        }
-        
-        function displayError(error) {
-             resultDiv.innerHTML = `<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
-                                       <p class="font-bold">An error occurred!</p>
-                                       <p>${error.message}</p>
-                                       <p class="text-sm mt-2">Example: "models/gemini-2.0-flash is not found". This is often due to Google Cloud project configuration.</p>
-                                       <ul class="list-disc list-inside text-sm mt-1">
-                                           <li>Please ensure the "Generative Language API" is enabled in your Google Cloud project.</li>
-                                           <li>Also, check if billing is enabled for your project, as it might be required for some models.</li>
-                                       </ul>
-                                   </div>`;
-        }
-    </script>
 </body>
 </html>
